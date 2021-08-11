@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}
+    {% if user is defined %}
+        <h1>Modifier <strong>{{ user.username }}</strong></h1>
+    {% else %}
+        <h1>Créer un utilisateur</h1>
+    {% endif %}
+{% endblock %}
+{% block header_img %}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-success pull-right">
+            {% if user is defined %}
+                Modifier
+            {% else %}
+                Créer
+            {% endif %}
+        </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
