@@ -80,6 +80,7 @@ class TaskController extends AbstractController
      */
     public function editAction(Task $task, Request $request)
     {
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task);
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -126,6 +127,7 @@ class TaskController extends AbstractController
      */
     public function deleteTaskAction(Task $task)
     {
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task);
         if ($this->manager->remove($task)) {
             $this->addFlash('success', 'La tâche a bien été supprimée.');
         } else {
