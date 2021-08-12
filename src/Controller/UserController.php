@@ -4,18 +4,18 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
-    private UserPasswordHasherInterface $passwordHasher;
+    private UserManager $manager;
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    public function __construct(UserManager $manager)
     {
-        $this->passwordHasher = $passwordHasher;
+        $this->manager = $manager;
     }
 
     /**
@@ -23,7 +23,12 @@ class UserController extends AbstractController
      */
     public function listAction()
     {
-        return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository(User::class)->findAll()]);
+        return $this->render(
+            'user/list.html.twig', 
+            [
+                'users' => $this->getDoctrine()->getRepository(User::class)->findAll()
+            ]
+        );
     }
 
     /**
@@ -35,17 +40,12 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $this->passwordHasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($password);
-            $user->setRoles(['ROLE_USER']);
-
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+            if ($this->manager->save($user)) {
+                $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+            } else {
+                $this->addFlash("danger", "L'utilisateur n'a pu être ajouté.");
+            }
 
             if ($this->getUser() != null) {
                 return $this->redirectToRoute('user_list');
@@ -66,12 +66,11 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->passwordHasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', "L'utilisateur a bien été modifié");
+            if ($this->manager->update($user)) {
+                $this->addFlash('success', "L'utilisateur a bien été mis à jour");
+            } else {
+                $this->addFlash('danger', "L'utilisateur n'a pu être mis à jour");
+            }
 
             return $this->redirectToRoute('user_list');
         }
