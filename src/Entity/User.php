@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -39,6 +40,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
      */
     private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="author")
+     */
+    private $tasks;
 
     /**
      * @ORM\Column(type="json", nullable=true)
@@ -118,5 +124,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function getTasks() : Collection
+    {
+        return $this->tasks;
     }
 }

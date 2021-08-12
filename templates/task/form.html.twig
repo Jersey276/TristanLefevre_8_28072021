@@ -5,7 +5,7 @@
         {{ form_start(form) }}
             {{ form_widget(form) }}
             <button type="submit" class="btn btn-success pull-right">
-                {% if isEdit is defined %}
+                {% if task is defined %}
                     Modifier
                 {% else %}
                     Ajouter

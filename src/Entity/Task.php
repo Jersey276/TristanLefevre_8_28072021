@@ -43,7 +43,7 @@ class Task
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
      */
-    private $Author;
+    private $author;
 
     public function __construct()
     {
@@ -98,17 +98,17 @@ class Task
 
     public function getAuthor(): ?User
     {
-        if($this->Author != null) {
-            return $this->Author;
+        if($this->author != null) {
+            return $this->author;
         }
         $user = new User();
         $user->setUsername('Anonyme');
         return $user;
     }
 
-    public function setAuthor(?User $Author): self
+    public function setAuthor(?User $author): self
     {
-        $this->Author = $Author;
+        $this->author = $author;
 
         return $this;
     }
