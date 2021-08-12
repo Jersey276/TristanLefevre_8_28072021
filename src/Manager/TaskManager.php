@@ -14,8 +14,9 @@ class TaskManager extends AbstractManager
         parent::initialize($doctrine);
     }
 
-    public function save(Task $task)
+    public function save(Task $task, User $user)
     {
+        $task->setAuthor($user);
         $this->doctrine->persist($task);
         try {
             $this->doctrine->flush();
