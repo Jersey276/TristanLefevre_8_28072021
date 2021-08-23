@@ -4,7 +4,6 @@ namespace App\Manager;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager extends AbstractManager
@@ -27,7 +26,7 @@ class UserManager extends AbstractManager
         try {
             $this->doctrine->flush();
             return true;
-        } catch (ORMException $e){
+        } catch (\Exception $e){
             return false;
         }
     }
@@ -38,7 +37,7 @@ class UserManager extends AbstractManager
             $user->setPassword($this->hashPassword($user));
             $this->doctrine->flush();
             return true;
-        } catch (ORMException $e){
+        } catch (\Exception $e){
             return false;
         }
     }

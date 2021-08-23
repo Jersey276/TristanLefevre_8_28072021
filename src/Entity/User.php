@@ -54,11 +54,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private array $roles = [];
 
-    /**
-     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="Author")
-     */
-    private $tasks;
-
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
