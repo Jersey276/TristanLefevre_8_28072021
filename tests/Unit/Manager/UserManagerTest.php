@@ -57,7 +57,7 @@ class UserManagerTest extends KernelTestCase
         $user->setUsername('test1');
         $user->setPassword('test');
         $user->setEmail('test@test.fr');
-        $user->setEmail($this->roles);
+        $user->setRoles($this->roles);
         $this->assertFalse(self::$manager->save($user));
     }
 

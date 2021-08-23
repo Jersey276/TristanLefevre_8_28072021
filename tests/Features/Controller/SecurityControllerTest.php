@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
-    private User $user, $admin;
+    private User $user;
     private KernelBrowser $client;
     private static EntityManagerInterface $doctrine;
 
