@@ -19,7 +19,7 @@ class UserManager extends AbstractManager
         $this->passwordHasher = $passwordHasher;
     }
 
-    public function save(User $user)
+    public function save(User $user) : bool
     {
         $user->setPassword($this->hashPassword($user));
         $this->doctrine->persist($user);
@@ -31,7 +31,7 @@ class UserManager extends AbstractManager
         }
     }
 
-    public function update(User $user)
+    public function update(User $user) : bool
     {
         try {
             $user->setPassword($this->hashPassword($user));

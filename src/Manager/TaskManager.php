@@ -14,7 +14,7 @@ class TaskManager extends AbstractManager
         parent::initialize($doctrine);
     }
 
-    public function save(Task $task, User $user)
+    public function save(Task $task, User $user) : bool
     {
         $task->setAuthor($user);
         $this->doctrine->persist($task);
@@ -26,13 +26,13 @@ class TaskManager extends AbstractManager
         }
     }
 
-    public function update(Task $task)
+    public function update(Task $task) : bool
     {
         $this->doctrine->flush();
         return true;
     }
 
-    public function remove(Task $task)
+    public function remove(Task $task) : bool
     {
         $this->doctrine->remove($task);
         $this->doctrine->flush();

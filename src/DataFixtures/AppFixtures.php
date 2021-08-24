@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
         ['user task','user content','test'],
         ['admin task','admin content','admin']
     ];
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager) : void
     {
         foreach (self::USERS as $userdata) {
             list($pseudo, $password, $email, $role) = $userdata;
