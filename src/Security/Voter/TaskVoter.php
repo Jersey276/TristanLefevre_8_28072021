@@ -43,9 +43,9 @@ class TaskVoter extends Voter
         return false;
     }
 
-    private function canEdit(User $user, Task $task)
+    private function canEdit(User $user, Task $task) : bool
     {
-        if ($user === $task->getAuthor() || $task->getAuthor()->getUserIdentifier() === 'Anonyme' && $this->security->isGranted('ROLE_ADMIN')) {
+        if ($user === $task->getAuthor() || $task->getAuthor() != null && $task->getAuthor()->getUserIdentifier() === 'Anonyme' && $this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
         return false;

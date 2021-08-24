@@ -8,6 +8,7 @@ use App\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
@@ -21,7 +22,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users", name="user_list")
      */
-    public function listAction()
+    public function listAction() : Response
     {
         return $this->render(
             'user/list.html.twig', 
@@ -34,7 +35,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request) : Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -58,7 +59,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request)
+    public function editAction(User $user, Request $request) : Response
     {
         $form = $this->createForm(UserType::class, $user);
 

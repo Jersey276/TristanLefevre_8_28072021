@@ -9,6 +9,7 @@ use App\Manager\TaskManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends AbstractController
 {
@@ -21,7 +22,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function listAction()
+    public function listAction() : Response
     {
         return $this->render(
             'task/list.html.twig', 
@@ -38,7 +39,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/done", name="task_done_list")
      */
-    public function listDoneAction()
+    public function listDoneAction() : Response
     {
         return $this->render(
             'task/list.html.twig',
@@ -54,7 +55,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request) : Response
     {
         $task = new Task();
         /** @var User $user */
@@ -75,7 +76,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(Task $task, Request $request)
+    public function editAction(Task $task, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('TASK_EDIT', $task);
         $form = $this->createForm(TaskType::class, $task);
@@ -97,7 +98,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTaskAction(Task $task) : Response
     {
         $task->toggle(!$task->isDone());
         $this->manager->update($task);
@@ -115,7 +116,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTaskAction(Task $task) : Response
     {
         $this->denyAccessUnlessGranted('TASK_EDIT', $task);
         $this->manager->remove($task);
