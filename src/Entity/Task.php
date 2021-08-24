@@ -99,7 +99,7 @@ class Task
 
     public function getAuthor(): ?User
     {
-        if($this->author != null) {
+        if(isset($this->author)) {
             return $this->author;
         }
         $user = new User();
