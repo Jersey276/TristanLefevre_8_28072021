@@ -43,14 +43,13 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($this->manager->save($user)) {
                 $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+                if ($this->getUser() != null) {
+                    return $this->redirectToRoute('user_list');
+                }
+                return $this->redirectToRoute('app_login');
             } else {
                 $this->addFlash("danger", "L'utilisateur n'a pu être ajouté.");
             }
-
-            if ($this->getUser() != null) {
-                return $this->redirectToRoute('user_list');
-            }
-            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('user/form.html.twig', ['form' => $form->createView()]);
@@ -68,10 +67,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($this->manager->update($user)) {
                 $this->addFlash('success', "L'utilisateur a bien été mis à jour");
-            } else {
-                $this->addFlash('danger', "L'utilisateur n'a pu être mis à jour");
             }
-
             return $this->redirectToRoute('user_list');
         }
 

@@ -36,7 +36,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @Route("/task/done", name="task_done_list")
+     * @Route("/tasks/done", name="task_done_list")
      */
     public function listDoneAction()
     {
@@ -64,11 +64,8 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($this->manager->save($task, $user)) {
-                $this->addFlash('success', 'La tâche a été bien été ajoutée.');
-            } else {
-                $this->addFlash('danger', 'la tâche n\'a pu être ajoutée');
-            }
+            $this->manager->save($task, $user);
+            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
             return $this->redirectToRoute('task_list');
         }
 
@@ -86,11 +83,8 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($this->manager->update($task)) {
-                $this->addFlash('success', 'La tâche a bien été mise à jour.');
-            } else {
-                $this->addFlash('danger', 'La tâche n\'a pu être mise à jour.');
-            }
+            $this->manager->update($task);
+            $this->addFlash('success', 'La tâche a bien été mise à jour.');
             return $this->redirectToRoute('task_list');
         }
 
@@ -106,20 +100,16 @@ class TaskController extends AbstractController
     public function toggleTaskAction(Task $task)
     {
         $task->toggle(!$task->isDone());
-        if ($this->manager->update($task)) {
-            if ($task->isDone()) {
-                $result = 'terminé';
-                $redirect = "task_list";
-            } else {
-                $result = 'non terminé';
-                $redirect = "task_done_list";
-            }
-            $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme %s', $task->getTitle(), $result));
-            return $this->redirectToRoute($redirect);
+        $this->manager->update($task);
+        if ($task->isDone()) {
+            $result = 'terminé';
+            $redirect = "task_list";
         } else {
-            $this->addFlash('danger', 'La tâche n\'a pu être mise à jour.');
+            $result = 'non terminé';
+            $redirect = "task_done_list";
         }
-        return $this->redirectToRoute('task_list');
+        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme %s', $task->getTitle(), $result));
+        return $this->redirectToRoute($redirect);
     }
 
     /**
@@ -128,11 +118,8 @@ class TaskController extends AbstractController
     public function deleteTaskAction(Task $task)
     {
         $this->denyAccessUnlessGranted('TASK_EDIT', $task);
-        if ($this->manager->remove($task)) {
-            $this->addFlash('success', 'La tâche a bien été supprimée.');
-        } else {
-            $this->addFlash('danger', 'La tâche n\'a pu être supprimée.');
-        }
+        $this->manager->remove($task);
+        $this->addFlash('success', 'La tâche a bien été supprimée.');
         return $this->redirectToRoute('task_list');
     }
 }

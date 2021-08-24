@@ -21,29 +21,21 @@ class TaskManager extends AbstractManager
         try {
             $this->doctrine->flush();
             return true;
-        } catch (ORMException $e){
+        } catch (\Exception $e){
             return false;
         }
     }
 
     public function update(Task $task)
     {
-        try {
-            $this->doctrine->flush();
-            return true;
-        } catch (ORMException $e){
-            return false;
-        }
+        $this->doctrine->flush();
+        return true;
     }
 
     public function remove(Task $task)
     {
         $this->doctrine->remove($task);
-        try {
-            $this->doctrine->flush();
-            return true;
-        } catch (ORMException $e){
-            return false;
-        }
+        $this->doctrine->flush();
+        return true;
     }
 }
