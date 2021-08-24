@@ -1,0 +1,7 @@
+parameters:
+	paths:
+		- src
+	checkGenericClassInNonGenericObjectType: false
+	checkMissingIterableValueType: false
+	excludePaths:
+		- src/Security/Voter
