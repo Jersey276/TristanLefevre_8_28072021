@@ -31,6 +31,6 @@ When you create a new test, use this command for test it
 php vendor/bin/phpunit --filter:[testname] --coverage-html [reportfoldername]
 ```
 |option| function |
-|:--|--:|
-|``` --filter:[testname]```| use only this test |
-|``` --coverage-html [reportfoldername]```| create a coverage report and throw test |
+|:--|:--|
+|``` --filter:[testname]```| lunch test for specified test method |
+|``` --coverage-html [reportfoldername]```| create a coverage report after lunch test |
