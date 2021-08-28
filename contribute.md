@@ -8,5 +8,6 @@ For contribute to this project, you need to respect some rule of code quality li
 1.  respect Codacy code convention. (some rules can be ignored like var/parameter names, unused param for herited/implemented methods,...)
 2.  use phpstan for check error on your update that can be a weak point and can crash your functionnality
 3.  create function/unit test for check if your work can be used. Don't only do manual test.
+4.  test before commit and push. When you want to lunch test, see [Testing](https://github.com/Jersey276/TristanLefevre_8_28072021/blob/readme/README.md#Testing) on readme.md for more detail
 
 Some questions, an issue with this 1.1 update? Create an issue on this project, we will awnser to this.
