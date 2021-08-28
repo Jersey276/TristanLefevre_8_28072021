@@ -1,6 +1,6 @@
 ToDoList
 ========
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/15760ae5ae2e405190f2ac14de670289)](https://www.codacy.com/gh/Jersey276/TristanLefevre_8_28072021/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Jersey276/TristanLefevre_8_28072021&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b48a8e61a969443eb424c5bf86714165)](https://www.codacy.com/gh/Jersey276/TristanLefevre_8_28072021/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Jersey276/TristanLefevre_8_28072021&amp;utm_campaign=Badge_Grade)
 
 Base du projet #8 : Améliorez un projet existant
 
@@ -13,14 +13,24 @@ git clone https://github.com/Jersey276/TristanLefevre_8_28072021.git
 ``` 
 2.  install all Composer dependencies (on console at base project folder)
 ```
-composer update 
+composer install
 ```
 3.  Create database and lunch migration
 ```
-php bin/console database:create
+php bin/console doctrine:database:create
 php bin/console doctrine:migration:migrate
 ```
 4.  optional lunch fixtures for test application with basic data
 ```
-php bin/console doctrine:fixtures:load --env=dev
+php bin/console doctrine:fixtures:load
 ```
+
+## Testing
+When you create a new test, use this command for test it
+```
+php vendor/bin/phpunit --filter:[testname] --coverage-html [reportfoldername]
+```
+|option| function |
+|:--|--:|
+|``` --filter:[testname]```| use only this test |
+|``` --coverage-html [reportfoldername]```| create a coverage report and throw test |
